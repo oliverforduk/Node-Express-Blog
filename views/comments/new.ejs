@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+<h1>Add a comment to <%= blogpost.title %></h1>
+
+<form action="/blogposts/<%= blogpost._id %>/comments" method="post">
+    <div class="form-group">
+        <input class="form-control" type="text" name="comment[text]" placeholder="Write your comment..." required maxlength="150">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block">Post Comment</button>
+    </div>
+</form>
+<a href="javascript:history.back()">Go Back</a>
+
+<% include ../partials/footer %>

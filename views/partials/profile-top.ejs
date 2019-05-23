@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="col-12 col-lg-9">
+        <!--Profile card xs - sm-->
+        <div class="d-block d-md-none">
+            <div class="card bg-dark text-white">
+                <div class="row">
+                    <div class="col-5 d-line">
+                        <div class="profile-img-wrapper">
+                            <% if(user.avatarId){ %>
+                                <img class="width-100" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image:url(<%= user.avatar %>)" />
+                            <% }else{ %>
+                                <img class="width-100" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image:url(<%= defaultAvatar %>)" />
+                            <% } %>                        
+                        </div>
+                    </div>
+                    <div class="col-7 padding-l-0 bottom-right">
+                        <h3 class="text-center"><%= user.username %></h3>
+                        <div class="p-b-05">
+                            <!--Edit button-->
+                            <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                                <a href="/user/settings/<%= user.id %>">
+                                    <button class="btn btn-light p-05 width-100" type="submit">Edit profile</button>
+                                </a>
+                            <% } %>
+                            <!--Follow/unfollow button-->
+                            <% if(!currentUser){ %>
+                                <!--If no user show follow form-->
+                                <form id="follow_form" action="/user/<%= user.id %>/follow" method="POST">
+                                    <button class="btn btn-light width-100" type="submit">Follow</button>
+                                </form>
+                            <% }else if(!user._id.equals(currentUser._id)){ %>
+                                <!--If current user is not poster-->
+                                <% if(folPos !== -1){ %>
+                                    <!--If current user is found in posters followers array-->
+                                    <form id="unfollow_form" action="/user/<%= user.id %>/follow?_method=DELETE" method="POST">
+                                        <input type="hidden" name="folPos" value="<%= folPos %>">
+                                        <button class="btn btn-secondary width-100" type="submit">Unfollow</button>
+                                    </form>
+                                <% }else{ %>
+                                    <!--If current user is not following poster-->
+                                    <form id="follow_form" action="/user/<%= user.id %>/follow" method="POST">
+                                        <button class="btn btn-light width-100" type="submit">Follow</button>
+                                    </form>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--Profile card md-->
+        <div class="d-none d-md-block d-lg-none">
+            <div class="card bg-dark text-white">
+                <div class="row">
+                    <div class="col-3 d-line">
+                        <div class="profile-img-wrapper">
+                            <% if(user.avatarId){ %>
+                                <img class="width-100" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image:url(<%= user.avatar %>)" />
+                            <% }else{ %>
+                                <img class="width-100" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image:url(<%= defaultAvatar %>)" />
+                            <% } %> 
+                        </div>
+                    </div>
+                    <div class="col-9 padding-l-0 bottom-right">
+                        <h3><%= user.username %></h3>
+                        <p class="bio">
+                            <% if(user.bio){ %>
+                                <%= user.bio %>
+                            <% }else{ %>
+                                <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                                    You haven't written a bio yet
+                                <% }else{ %>
+                                    <%= user.username %>
+                                    hasn't written a bio yet
+                                <% } %>
+                            <% } %>
+                        </p>
+                        <div class="p-b-05">
+                            <!--Edit button-->
+                            <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                                <a href="/user/settings/<%= user.id %>">
+                                    <button class="btn btn-light p-05 width-100" type="submit">Edit profile</button>
+                                </a>
+                            <% } %>
+                            <!--Follow/unfollow button-->
+                            <% if(!currentUser){ %>
+                                <a href="#" data-toggle="modal" data-target="#loginModal">
+                                    <button class="btn btn-light width-100">Follow</button>
+                                </a>
+                            <% }else if(!user._id.equals(currentUser._id)){ %>
+                                <!--If current user is not poster-->
+                                <% if(folPos !== -1){ %>
+                                    <!--If current user is found in posters followers array-->
+                                    <form id="unfollow_form" action="/user/<%= user.id %>/follow?_method=DELETE" method="POST">
+                                        <input type="hidden" name="folPos" value="<%= folPos %>">
+                                        <button class="btn btn-secondary width-100" type="submit">Unfollow</button>
+                                    </form>
+                                <% }else{ %>
+                                    <!--If current user is not following poster-->
+                                    <form id="follow_form" action="/user/<%= user.id %>/follow" method="POST">
+                                        <button class="btn btn-light width-100" type="submit">Follow</button>
+                                    </form>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

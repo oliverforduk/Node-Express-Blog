@@ -1,0 +1,70 @@
+<!--Display All Blogposts-->
+<% blogposts.forEach(function(blogpost){ %>
+    <div class="col-12 note-holder">
+        <div class="row">
+            <div class="col-12">
+                <div class="row p-05 p-b-0">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-2 note-border postImg padding-l-0 padding-r-0">
+                                <% if(blogpost.image){ %>
+                                    <a href="/blogposts/<%= blogpost._id %>">
+                                        <img class="card-img cardImg" src="<%= blogpost.image %>">
+                                    </a>
+                                <% }else{ %>
+                                    <div class="text-icon">
+                                        <i class="fas fa-align-left"></i>
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="col-10 note-border border-b-0 bg-white">
+                                <div class="postTitle">
+                                    <a href="/blogposts/<%= blogpost._id %>"><%= blogpost.title %></a>
+                                </div>
+                                <div class="postDetails">
+                                    <span class="align-top">
+                                        <a class="button-collapse" style="text-decoration: none;" data-toggle="collapse" href="#collapseText<%= blogpost._id %>" role="button" aria-expanded="false" aria-controls="collapse<%= blogpost._id %>">
+                                            <i class="fas fa-plus-circle"></i>
+                                        </a>
+                                        Submitted <i><%= moment(blogpost.createdAt).fromNow() %></i> by <a href="/user/profile/<%= blogpost.author.id %>/activity"><%= blogpost.author.username %></a>
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!--Post expanded-->
+                            <div class="col-12 col-md-10 offset-md-2 padding-l-0 padding-r-0">
+                                <div class="collapse" id="collapseText<%= blogpost._id %>">
+                                    <div class="card card-body text-collapse top-box border-t-0">
+                                        <% if(blogpost.body){ %>
+                                            <%= blogpost.body %>
+                                        <% }else{ %>
+                                            <img class="index-image" src="<%= blogpost.image %>">
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-2 wrapper post-icons">
+                                <i class="fas fa-thumbs-up"></i>
+                                <%= blogpost.likes.length %>
+                                <i class="fas fa-heart"></i>
+                                <%= blogpost.favourited.length %>
+                            </div>
+                            <div class="col-10 padding-l-0 padding-r-0 post-icons">
+                                <i class="fas fa-comment"></i>
+                                <a class="post-icons" href="/blogposts/<%= blogpost._id %>">
+                                    <%= blogpost.comments.length %>
+                                    <% if(blogpost.comments.length == 1){ %>
+                                        Comment
+                                    <% }else{ %>
+                                        Comments
+                                    <% } %>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% }); %>

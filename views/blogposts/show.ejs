@@ -1,0 +1,235 @@
+<% include ../partials/header %>
+
+<script>
+    function delConfirm(){
+        if(confirm("Are you sure you want to delete this post?")){
+            document.getElementById('del_form').submit();
+        }else{
+            return false;
+        }
+    }
+</script>
+
+<div class="row">
+    <div class="col-12 col-lg-7 offset-lg-1">
+        <div class="card bg-dark text-white show-post">
+            <!--Post title, author, & follow button-->
+            <div class="card-header show-header">
+                <div class="row">
+                    <div class="col-12 padding-r-0">
+                        <div class="float-r">
+                            <!--Follow/unfollow button-->
+                            <% if(!currentUser){ %>
+                                <!--If no user show follow button-->   
+                                <div class="text-right float-r">
+                                    <a href="#" data-toggle="modal" data-target="#loginModal">
+                                        <button class="btn btn-large btn-light follow-btn" type="submit">Follow <%= followers %></button>
+                                    </a>
+                                </div>
+                            <% }else if(!blogpost.author.id.equals(currentUser._id)){ %>
+                                <!--If current user is not poster-->
+                                <% if(folPos !== -1){ %>
+                                    <!--If current user is found in posters followers array-->
+                                    <form id="unfollow_form" class="inline" action="/user/<%= blogpost.author.id %>/follow?_method=DELETE" method="POST">
+                                        <input type="hidden" name="folPos" value="<%= folPos %>">
+                                        <div class="text-right float-r">
+                                            <button class="btn btn-large btn-secondary follow-btn" type="submit">Unfollow <%= followers %></button>
+                                        </div>
+                                    </form>
+                                <% }else{ %>
+                                    <!--If current user is not following poster-->
+                                    <form id="follow_form" class="inline" action="/user/<%= blogpost.author.id %>/follow" method="POST">
+                                        <div class="text-right float-r">
+                                            <button class="btn btn-large btn-light follow-btn" type="submit">Follow <%= followers %></button>
+                                        </div>
+                                    </form>
+                                <% } %>
+                            <% } %>
+                        </div>
+                        <h4 class="margin-0"><%= blogpost.title %></h4>
+                        <span>by <a href="/user/profile/<%= blogpost.author.id %>/activity"><%= blogpost.author.username %></a> <i><%= moment(blogpost.createdAt).fromNow() %></i></span>
+                    </div>
+                </div>
+            </div>
+            <!--Post Image &/or text-->
+            <div class="card-body show-body">
+                <!--If the post has an image-->
+                <% if(blogpost.image){ %>
+                        <img class="card-img cardImg" src="<%= blogpost.image %>">
+                <% } %>
+                
+                <!--If the post has text-->
+                <% if(blogpost.body){ %>
+                    <div class="show-text">
+                        <%= blogpost.body %>
+                    </div>
+                <% } %>
+            </div>
+            
+            <!--Rating bar (like/fav/edit/delete)-->
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark sidebar-li rating-bar">
+                    
+                    <!--Like/unlike button-->
+                    <!--Not logged in:-->
+                    <% if(!currentUser){ %>
+                        <div id="like_form" class="rating-form">
+                            <a class="formIcon" href="#" data-toggle="modal" data-target="#loginModal">
+                                <i class="fas fa-thumbs-up"></i>
+                            </a>
+                            <%= blogpost.likes.length %>
+                        </div>
+                    <!--Logged in and has liked-->
+                    <% }else if(currentUser && (arrPos !== -1)){ %>
+                        <form id="unlike_form" class="rating-form" action="/blogposts/<%= blogpost._id %>/likes?_method=DELETE" method="POST">
+                            <input type="hidden" name="arrPos" value="<%= arrPos %>">
+                            <a class="formIcon" href="javascript:{}" onclick="document.getElementById('unlike_form').submit();"><i class="fas fa-thumbs-up"></i></a>
+                            <%= blogpost.likes.length %>
+                        </form>
+                    <!--Logged in but hasn't liked:-->
+                    <% }else{ %>
+                        <form id="like_form" class="rating-form" action="/blogposts/<%= blogpost._id %>/likes" method="POST">
+                            <a class="formIcon" href="javascript:{}" onclick="document.getElementById('like_form').submit();"><i class="fas fa-thumbs-up"></i></a>
+                            <%= blogpost.likes.length %>
+                        </form>
+                    <% } %>
+                    
+                    <!--Favourite/Unfavourite button-->
+                    <!--Not logged in:-->
+                    <% if(!currentUser){ %>
+                        <div id="fav_form" class="rating-form">
+                            <a class="formIcon" href="#" data-toggle="modal" data-target="#loginModal">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                            <%= blogpost.favourited.length %>
+                        </div>
+                    <!--Logged in and has fav-->
+                    <% }else if(currentUser && (favPos !== -1)){ %>
+                        <form id="unfav_form" class="rating-form" action="/user/<%= blogpost._id %>/favourite?_method=DELETE" method="POST">
+                            <input type="hidden" name="favPos" value="<%= favPos %>">
+                            <a class="formIcon" href="javascript:{}" onclick="document.getElementById('unfav_form').submit();"><i class="fas fa-heart"></i></a>
+                            <%= blogpost.favourited.length %>
+                        </form>
+                    <!--Logged in and hasn't faved-->
+                    <% }else{ %>
+                        <form id="fav_form" class="rating-form" action="/user/<%= blogpost._id %>/favourite" method="POST">
+                            <a class="formIcon" href="javascript:{}" onclick="document.getElementById('fav_form').submit();"><i class="fas fa-heart"></i></a>
+                            <%= blogpost.favourited.length %>
+                        </form>
+                    <% } %>
+                    
+                    <!--Edit/Delete forms-->
+                    <% if(currentUser && blogpost.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                        <div class="float-r">
+                            <a class="edit-icon" href="/blogposts/<%= blogpost._id %>/edit"><i class="fas fa-edit"></i></a>
+                        <form id="del_form" class="rating-form" action="/blogposts/<%= blogpost._id %>?_method=DELETE" method="POST">
+                            <a class="formIcon" href="javascript:{}" onclick="delConfirm();"><i class="fas fa-trash-alt"></i></a>
+                        </form>
+                        </div>
+                    <% } %>
+                    
+                </li>
+            </ul>
+        </div>
+        
+        <!--Comment Form-->
+        <div class="card-body comment-output bg-dark text-white">
+            <form id="comment-form" action="/blogposts/<%= blogpost._id %>/comments" method="POST">
+                   <textarea class="form-control dark-form bottom-box no-resize" name="comment[text]" placeholder="Write your comment..." form="comment-form" rows="1" cols="70" required maxlength="120"></textarea>
+            
+            <div class="wrapper">
+                <% if(currentUser){ %>
+                    <button class="btn btn-light width-100 top-box">Post</button>
+                <% }else{ %>
+                    <a href="#" data-toggle="modal" data-target="#loginModal">
+                        <button class="btn btn-light width-100 top-box">Post</button>
+                    </a>
+                <% } %>
+            </div>
+            </form>
+        </div>
+        
+        <!--Comment output-->
+        <div class="comment-title">
+            <%= blogpost.comments.length %> 
+            <% if(blogpost.comments.length == 1){ %>
+                Comment
+            <% }else{ %>
+            Comments
+            <% } %>
+        </div>
+        
+        <% blogpost.comments.forEach(function(comment){ %>
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal<%= comment._id %>" tabindex="-1" role="dialog" aria-labelledby="#editModal<%= comment._id %>Label" aria-hidden="true">
+                <div class="modal-dialog mod-margin" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="#editModal<%= comment._id %>Label">Edit Comment</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="edit-form<%= comment._id %>" action="/blogposts/<%= blogpost._id %>/comments/<%= comment._id %>?_method=PUT" method="post">
+                                <div class="form-group">
+                                    <!--<input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>" required maxlength="120">-->
+                                    <textarea class="form-control no-resize" name="comment[text]" form="edit-form<%= comment._id %>" rows="1" cols="70" required maxlength="120"><%= comment.text %></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-dark btn-block">Edit Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="card-body comment-output bg-dark text-white">
+                <div class="comment-head">
+                    <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                        <div class="float-r">
+                            <a class="comment-edit" href="#" data-toggle="modal" data-target="#editModal<%= comment._id %>"><i class="fas fa-edit"></i></a>
+                            
+                            <form id="com_del_form<%= comment._id %>" class="inline" action="/blogposts/<%= blogpost._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                <a class="comment-del" href="javascript:{}" onclick="delConfirm<%= comment._id %>();"><i class="fas fa-trash-alt"></i></a>
+                            </form>
+                        </div>
+                    <% } %>
+                    
+                    <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                        <div class="comment-owner">
+                            <a href="/user/profile/<%= comment.author.id %>/activity">
+                                <%= comment.author.username %>
+                            </a>
+                            <span><%= moment(comment.createdAt).fromNow() %></span>
+                        </div>
+                    <% }else{ %>
+                        <a href="/user/profile/<%= comment.author.id %>/activity">
+                            <%= comment.author.username %>
+                        </a>
+                        <span><%= moment(comment.createdAt).fromNow() %></span>
+                    <% } %>
+                </div>
+        
+                <div class="comment-body">
+                    <%= comment.text %>
+                </div>
+                    
+            </div>
+            <script>
+                function delConfirm<%= comment._id %>(){
+                    if(confirm("Delete this comment?")){
+                        document.getElementById('com_del_form<%= comment._id %>').submit();
+                    }else{
+                        return false;
+                    }
+                }
+            </script>
+        <% }); %>
+    </div>
+    <% include ../partials/sidebar %> 
+</div>
+<div class="buffer-150"></div>
+
+<% include ../partials/footer %>

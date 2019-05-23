@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-12">
+        <% if(currentUser){ %>
+            <!-- User Banner (md - xl)-->
+            <div class="jumbotron banner d-none d-md-block">
+                <h1 class="jumboText">Welcome Back!</h1>
+                <hr id="jumboHr" class="elementEmpty">
+            </div>
+        
+        <% }else{ %>
+            <!--Banner (xs - sm)-->
+            <div class="jumbotron banner miniJumbo d-block d-md-none">
+                <h4 class="jumboText">Welcome to ExpressBlog!</h4>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-6 border-right">
+                        <h5 class="jumboText">New?</h5>
+                        <div class="wrapper">
+                            <button class="jumboBut btn btn-light" data-toggle="modal" data-target="#registerModal">Sign Up</button>
+                        </div>
+                    </div>
+                    <div class="col-6 border-left">
+                        <h5 class="jumboText">Old?</h5>
+                        <div class="wrapper">
+                            <button class="jumboBut btn btn-light" data-toggle="modal" data-target="#loginModal">Sign In</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Banner (md - xl) -->
+            <div class="jumbotron banner d-none d-md-block">
+                <h1 class="jumboText">Welcome to ExpressBlog!</h1>
+                <hr id="jumboHr" class="elementEmpty">
+                
+                <div class="row">
+                    <div class="col-6 border-right">
+                        <h3 class="jumboText">New Here?</h3>
+                        <div class="wrapper">
+                            <button class="jumboBut btn btn-light" data-toggle="modal" data-target="#registerModal">Sign Up</button>
+                        </div>
+                    </div>
+                    <div class="col-6 border-left">
+                        <h3 class="jumboText">Already A Member?</h3>
+                        <div class="wrapper">
+                            <button class="jumboBut btn btn-light" data-toggle="modal" data-target="#loginModal">Sign In</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>

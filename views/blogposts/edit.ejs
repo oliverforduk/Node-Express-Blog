@@ -1,0 +1,100 @@
+<% include ../partials/header %>
+
+<script>
+    function imageOutput(input) {
+        //Set preview image
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image-preview')
+                    .attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+            
+            //Set image text
+            var fileName = input.value.replace(/C:\\fakepath\\/, '');
+            $('#image-span').text(fileName + " selected");
+            //Make image visable
+            $('#image-holder').removeClass("none");
+        }
+    }
+    
+    function reset(){
+        //Reset file value
+        document.getElementById("image").value = null;
+        
+        //Reset image-span
+        $("#image-span").text("Select image to upload");
+        
+        //Hide image-holder
+        $("#image-holder").addClass("none");
+    }
+</script>
+
+<div class="comment-title">
+    <h2>Edit your post</h2>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-9">
+        <div class="buffer-50"></div>
+        <form id="edit-blogpost-form" action="/blogposts/<%= blogpost._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+
+            <div class="card bg-dark text-white new-form">
+                <input class="form-control dark-form bottom-box" type="text" name="blogpost[title]" value="<%= blogpost.title %>" required maxlength="120">
+
+                <% if(blogpost.image){ %>
+                    <div class="form-image">
+                        <label for="image" class="input-label btn btn-secondary over-ellipse">
+                             <span id="image-span">Click to change image</span>
+                        </label>
+                        <input type="file" id="image" name="image" accept="image/*" onchange="imageOutput(this);">
+        
+                        <div id="image-holder" class=" text-center">
+                            <img id="image-preview" src="<%= blogpost.image %>"/>
+                        </div>
+                    </div>
+                <% }else{ %>
+                    <div class="form-image">
+                        <label for="image" class="input-label btn btn-secondary">
+                             <span id="image-span">Select image to upload</span>
+                        </label>
+                        <input type="file" id="image" name="image" accept="image/*" onchange="imageOutput(this);">
+        
+                        <div id="image-holder" class="none text-center">
+                            <img id="image-preview" src="#"/>
+                            <p class="reset-btn" onClick="reset();">Remove image</p>
+                        </div>
+                    </div>
+                <% } %>
+                
+                <div class="form-group">
+                    <textarea class="form-control dark-form top-box" type="text" name="blogpost[body]" form="edit-blogpost-form"><%= blogpost.body %></textarea>
+                </div>
+                
+                <!--Buttons xs - sm-->
+                <div class="d-block d-md-none new-btns">
+                    <button type="submit" class="btn btn-success float-r">Edit Post</button>
+                    <a href="/blogposts/<%= blogpost._id %>">
+                        <button type="button" class="btn btn-danger">Cancel</button>
+                    </a>
+                </div>
+                
+                <!--Buttons md-xl-->
+                <div class="d-none d-md-block new-btns">
+                    <button type="submit" class="btn btn-lg btn-success float-r">Edit Post</button>
+                    <a href="/blogposts/<%= blogpost._id %>">
+                        <button type="button" class="btn btn-lg btn-danger">Cancel</button>
+                    </a>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+    <% include ../partials/profile-side %>
+</div>
+
+<div class="buffer-150"></div>
+
+<% include ../partials/footer %>

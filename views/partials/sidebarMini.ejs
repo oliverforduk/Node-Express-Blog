@@ -1,0 +1,19 @@
+<!--Sidebar content for xs-md-->
+<div class="col-12 d-block d-lg-none top-bar">
+        <form class="top-form" action="#" method="">
+            <div class="">
+                <input class="form-control" type="text" name="search" placeholder="Blogpost search...">
+            </div>
+        </form>
+        <a href="#"><button class="btn btn-secondary li-btn">Search</button></a>
+        <% if(!currentUser){ %>
+            <a href="#" data-toggle="modal" data-target="#loginModal">
+                <button class="btn btn-dark li-btn">Make A Post</button>
+            </a>
+        <% }else{ %>
+            <a href="/blogposts/new">
+                <button class="btn btn-dark li-btn">Make A Post</button>
+            </a>
+        <% } %>
+        
+</div>

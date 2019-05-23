@@ -1,0 +1,99 @@
+<% include ../partials/header %>
+
+<script>
+    function imageOutput(input) {
+        //Set preview image
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image-preview')
+                    .attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+            
+            //Set image text
+            var fileName = input.value.replace(/C:\\fakepath\\/, '');
+            $('#image-span').text(fileName + " selected");
+            //Make image visable
+            $('#image-holder').removeClass("none");
+        }
+    }
+</script>
+
+<div class="comment-title">
+    <h2>Account settings</h2>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-9">
+        <div class="row">
+            <div class="col-12">
+                <!--Nav bar-->
+                <ul class="nav nav-tabs profile-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/user/settings/<%= user.id %>">Profile Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/settings/<%= user.id %>/password">Password Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-dark text-white new-form">
+                    <form id="user-profile-form" action="/user/settings/<%= user._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+                        <!--image-->
+                        <div class="row">
+                            <!--Avatar-->
+                            <div class="col-6">
+                                <div class="wrapper">
+                                    <h2 class="p-05">Your Avatar</h2>
+                                </div>
+                                <div class="form-image">
+                                    <label for="image" class="input-label btn btn-secondary over-ellipse">
+                                         <span id="image-span">Click to change avatar</span>
+                                    </label>
+                                    <input type="file" id="image" name="image" accept="image/*" onchange="imageOutput(this);">
+                                    
+                                    <div id="image-holder" class="text-center">
+                                        
+                                        <!--If user has avatar, display. else, defaultAvatar-->
+                                        <% if(user.avatarId){ %>
+                                            <img id="image-preview" src="<%= user.avatar %>"/>
+                                        <% }else{ %>
+                                            <img id="image-preview" src="<%= defaultAvatar %>"/>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Bio-->
+                            <div class="col-6 inher padding-l-0">
+                                <div class="wrapper settings-bio">
+                                    <h3 class="p-05">Your Bio</h3>
+                                    <div class="form-group">
+                                        <!--If user has bio, display, else, new-->
+                                        <% if(user.bio){ %>
+                                            <textarea class="form-control" type="text" name="bio" form="user-profile-form" maxlength="150"><%= user.bio %></textarea>
+                                        <% }else{ %>
+                                            <textarea class="form-control dark-form top-box" type="text" name="bio" placeholder="Add a bio to your profile" form="user-profile-form" maxlength="150"></textarea>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper p-05">
+                            <button class="btn btn-success" type="submit">Update My Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/profile-side %>
+</div>
+
+<% include ../partials/footer %>

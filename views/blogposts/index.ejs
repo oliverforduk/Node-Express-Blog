@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<!-- Banner -->
+<script>
+    // Expand banner hr
+    function expand(){
+        document.getElementById("jumboHr").classList.remove("elementEmpty");
+        document.getElementById("jumboHr").classList.add("elementFull");
+    }
+</script>
+
+<!--Banner-->
+<% include ../partials/banner %>
+
+<div class="row">
+    
+    <!--Sidebar content for xs-md-->
+    <% include ../partials/sidebarMini %>
+        
+    <!--Blogposts display-->
+    <div class="col-12 col-lg-9">
+        
+        <!--Sorting Bar-->
+        <ul class="nav nav-tabs profile-nav">
+            <li class="nav-item">
+                <a class="nav-link active" href="/blogposts">All Posts</a>
+            </li>
+            <% if(currentUser){ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/following">Following</a>
+                </li>
+            <% } %>
+            
+            <li class="nav-item ml-auto">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Newest</a>
+            </li>
+        </ul>
+        
+        <!--Display All Blogposts-->
+        <% include ../partials/postOutput %>
+        
+        <% if(blogposts.length == 0){ %>
+            <div class="wrapper no-posts">
+                <%= noMatch %>
+            </div>
+        <% } %>
+        
+        <!--Pagination bar-->
+        <% include ../partials/pagination %>
+        
+    </div>
+    
+    <!--Sidebar-->
+    <% include ../partials/sidebar %>  
+    
+</div>
+<div class="buffer-150"></div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,67 @@
+<% include ../partials/header %>
+
+<div class="comment-title">
+    <h2><%= user.username %>'s profile</h2>
+</div>
+
+<% include ../partials/profile-top %>
+
+<div class="row">
+    <div class="col-12 col-lg-9">
+        <!--Nav bar-->
+        <ul class="nav nav-tabs profile-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/user/profile/<%= user.id %>/activity">Activity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/profile/<%= user.id %>">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/user/profile/<%= user.id %>/favourites">Favourites</a>
+            </li>
+            <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/profile/<%= user.id %>/notifications">Notifications</a>
+                </li>
+            <% } %>
+            
+            <li class="nav-item ml-auto">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Newest</a>
+            </li>
+          
+            <!--<li class="nav-item dropdown ml-auto">-->
+            <!--    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sort By New</a>-->
+            <!--    <div class="dropdown-menu">-->
+            <!--        <a class="dropdown-item" href="#">New</a>-->
+            <!--    <div class="dropdown-divider"></div>-->
+            <!--        <a class="dropdown-item" href="#">Popular</a>-->
+            <!--    </div>-->
+            <!--</li>-->
+        </ul>
+        
+        <!--Blogpost Output-->
+        <% include ../partials/postOutput %>
+        
+        <% if(blogposts.length == 0){ %>
+            <div class="wrapper no-posts">
+                <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                    You havent favourited any posts yet
+                <% }else{ %>
+                    <%= user.username %>
+                    hasn't favourited any posts yet
+                <% } %>
+            </div>
+        <% } %>
+        
+        <!--Pagination bar-->
+        <% include ../partials/pagination %>
+        
+    </div>
+    
+    <% include ../partials/profile-side %>
+    
+</div>
+
+<div class="buffer-150"></div>
+
+<% include ../partials/footer %>

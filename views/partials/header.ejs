@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ExpressBlog</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">        <link rel="stylesheet" href="/stylesheets/main.css">
+        <!-- Make site responsive on mobile/tablet -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body onload="expand()">
+        
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog mod-margin" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">
+                        <strong>Login</strong> or 
+                        <a href="#" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#registerModal">
+                            <strong>Sign Up</strong>
+                        </a>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/login" method="post">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-dark btn-block">Login!</button>
+                        </div>
+                    </form>
+                    <div class="wrapper">
+                        <a href="/password">
+                            Forgotten Password?
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog mod-margin" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">
+                        
+                        <a href="#" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#loginModal">
+                            <strong>Login</strong>
+                        </a>
+                        or <strong>Sign Up</strong>
+                        </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/register" method="post">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="username" placeholder="Username" required maxlength="15">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password" placeholder="Password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-dark btn-block">Sign Up!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/blogposts">ExpressBlog</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ml-auto">
+                    <% if(!currentUser){ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                        </li>
+                    <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blogposts/new">Make A Post</a>
+                        </li>
+                        <li class="nav-item dropdown z-index">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Signed In As <%= currentUser.username %>
+                                <% if(notes.length > 0){ %>
+                                    (<%= notes.length %>)
+                                <% } %>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/user/profile/<%= currentUser._id %>/activity">Your Profile</a>
+                                <a class="dropdown-item" href="/user/profile/<%= currentUser._id %>/notifications">
+                                    Notifications
+                                    <% if(notes.length > 0){ %>
+                                        (<%= notes.length %>)
+                                    <% } %>
+                                </a>
+                                <a class="dropdown-item" href="/user/settings/<%= currentUser._id %>">Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                            </div>
+                        </li>
+                        
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <% if(error && error.length > 0) { %>   <!-- length is checked as it always exist even if empty -->
+            <div class="alert alert-primary" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0) { %>   <!-- length is checked as it always exist even if empty -->
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+    
+    <div class="container">

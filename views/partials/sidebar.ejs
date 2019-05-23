@@ -1,0 +1,108 @@
+<!--Sidebar-->
+<div class="col-3 d-none d-lg-block sideBar">
+    <div class="sticky-top">
+        
+        <form class="sideForm" action="/blogposts" method="GET">
+            <div class="form-holder">
+                <input class="form-control" type="text" name="search" placeholder="Search all posts">
+            </div>
+            <button class="btn btn-secondary li-btn" type="submit">Search</button>
+        </form>
+        
+        <% if(currentUser){ %>
+            <a href="/blogposts/new"><button class="btn btn-dark li-btn">Make A Post</button></a>
+        <% }else{ %>
+            <a href="#" data-toggle="modal" data-target="#loginModal">
+                <button class="btn btn-dark li-btn">Make A Post</button>
+            </a>
+        <% } %>
+        
+        <!--Recent posts carousel (only if theres at least 5 posts)-->
+        <% if(sideposts && sideposts.length >= 5){ %>
+        <div class="card text-white bg-dark top-box bottom-box p-05 car-card">
+            <div class="wrapper p-b-05">
+                <h3>Most Recent</h3>
+            </div>
+            <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    
+                    <div class="carousel-item active">
+                        <div class="car-img">
+                            <% if(sideposts[0].image){ %>
+                                <a href="/blogposts/<%= sideposts[0]._id %>">
+                                    <img class="d-block w-100" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image:url(<%= sideposts[0].image %>)">
+                                </a>
+                            <% }else{ %>
+                                <a href="/blogposts/<%= sideposts[0]._id %>">
+                                    <div class="text-icon car-no-img">
+                                        <i class="fas fa-align-left"></i>
+                                    </div>
+                                </a>
+                            <% } %>
+                            
+                            <div class="carousel-caption d-none d-md-block">
+                                <a href="/blogposts/<%= sideposts[0]._id %>">
+                                    <h5 class="over-ellipse text-white"><%= sideposts[0].title %></h5>
+                                </a>
+                                <div class="wrapper">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <%= sideposts[0].likes.length %>
+                                    |
+                                    <i class="fas fa-heart"></i>
+                                    <%= sideposts[0].favourited.length %>
+                                    |
+                                    <i class="fas fa-comment"></i>
+                                    <%= sideposts[0].comments.length %>
+                                </div>
+                            </div>
+                            <a href="/blogposts/<%= sideposts[0]._id %>">
+                                <button class="btn btn-light w-100">View Post</button>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <% for(var i = 1; i < 5; i++){ %>
+                        <div class="carousel-item">
+                            <div class="car-img">
+                                <% if(sideposts[i].image){ %>
+                                    <a href="/blogposts/<%= sideposts[i]._id %>">
+                                        <img class="d-block w-100" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image:url(<%= sideposts[i].image %>)">
+                                    </a>
+                                <% }else{ %>
+                                    <a href="/blogposts/<%= sideposts[i]._id %>">
+                                        <div class="text-icon car-no-img">
+                                            <i class="fas fa-align-left"></i>
+                                        </div>
+                                    </a>
+                                <% } %>
+
+                                <div class="carousel-caption d-none d-md-block">
+                                    <a href="/blogposts/<%= sideposts[i]._id %>">
+                                        <h5 class="over-ellipse text-white"><%= sideposts[i].title %></h5>
+                                    </a>
+                                    <div class="wrapper">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        <%= sideposts[i].likes.length %>
+                                        |
+                                        <i class="fas fa-heart"></i>
+                                        <%= sideposts[i].favourited.length %>
+                                        |
+                                        <i class="fas fa-comment"></i>
+                                        <%= sideposts[i].comments.length %>
+                                    </div>
+                                </div>
+                                <a href="/blogposts/<%= sideposts[i]._id %>">
+                                    <button class="btn btn-light w-100">View Post</button>
+                                </a>
+                            </div>
+                        </div>
+                        
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        <!--carousel end-->
+        
+    </div>
+</div>

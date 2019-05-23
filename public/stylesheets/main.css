@@ -1,0 +1,791 @@
+                    /*All Purpose*/
+
+body {
+    /*background-image: url("");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center;*/
+    /*background-size: cover;*/
+    background-color: #fbf7ea;
+}
+
+.padding-l-0{
+    padding-left:0;
+}
+.padding-r-0{
+    padding-right:0;
+}
+
+.margin-0{
+    margin: 0;
+}
+
+.wrapper{
+    text-align: center;
+}
+
+.inline{
+    display: inline-block;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.float-r{
+    float: right;
+}
+
+.float-l{
+    float: left;
+}
+
+.none{
+    display: none;
+}
+
+.no-resize{
+  resize: none;
+}
+
+.buffer-150{
+    height: 150px;
+}
+
+.buffer-50{
+    height: 50px;
+}
+
+.buffer-25{
+    height: 25px;
+}
+
+.vertical{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bottom-rounded{
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+
+.bottom-box{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.top-rounded{
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.top-box{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.width-100{
+    width: 100%;
+}
+
+.p-05{
+    padding: 0.5rem;
+}
+.p-t-05{
+    padding-top: 0.5rem;
+}
+.p-b-05{
+    padding-bottom: 0.5rem;
+}
+
+.p-10{
+    padding: 1rem;
+}
+
+.p-15{
+    padding: 1.5rem;
+}
+
+.p-b-0{
+    padding-bottom: 0;
+}
+
+.m-b-0{
+    margin-bottom: 0;
+}
+
+.bottom-right{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.alert{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.w-80{
+    width: 80%;
+}
+
+.over-ellipse{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mod-margin{
+    padding-top: 12%;
+}
+
+                    /*Container media queries*/
+.container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 550px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/*For under 600px*/
+@media only screen and (max-width: 600px) {
+    .container {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
+/*For over 1140px*/
+@media only screen and (min-width: 1140px) {
+    .container {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+
+                    /*Expanding Elements*/
+.elementFull{
+    width: 100%;
+    transition: all 1s ease-in-out;
+}
+
+.elementEmpty{
+    width: 0%;
+    margin: 0px;
+    transition: all 1s ease-in-out;
+}
+                    /*Navbar*/
+.z-index{
+    z-index: 10000;
+}
+
+.navbar-text >i{
+    margin-left: 8px;
+}
+
+                    /* CARD BORDERS (no rounding on bottom of header, top of body, and any of img */
+.cardHolder{
+    margin: 12px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.cardHead{
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: none;
+}
+
+.cardBottom{
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top: none;
+}
+
+.cardImg{
+    border-radius: 0;
+}
+
+#headerForm{
+    margin-right: 8px;
+}
+
+                    /*Avatar select styling*/
+.avatar{
+    margin-bottom: 15px;
+}
+
+label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #006dcc;
+}
+
+                    /* Jumbotron styling */
+.banner{
+    padding-top: 20px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    
+    background-image: 
+        linear-gradient(
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.5)
+        ),
+        url("https://res.cloudinary.com/dfbx8sedx/image/upload/v1557832521/banner.jpg");
+    background-repeat: no-repeat;
+    /*background-position: center;*/
+    background-size: cover;
+    color: #fff;
+}
+
+.banner h3{
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.banner hr{
+    background-color: #fff;
+    height: 1px;
+}
+
+.jumboText{
+    text-align: center;
+}
+
+.jumboBut{
+    width: 50%;
+    margin: auto;
+    padding-left:0;
+    padding-right:0;
+}
+
+.border-right{
+    border-right: 1px;
+    border-top-right-radius: 25px;
+}
+
+.border-left{
+    border-left: 1px;
+    border-top-left-radius: 25px;
+}
+
+.miniJumbo{
+    padding-top: 25px;
+}
+
+.miniJumbo .jumboBut{
+    font-size: 0.8em;
+}
+.miniJumbo .border-right{
+    border-top-right-radius: 0;
+}
+
+.miniJumbo .border-left{
+    border-top-left-radius: 0;
+}
+
+
+                    /*Sidebar styling*/
+.sticky-top{
+    top: 8px;
+    margin-top: 10px;
+}
+
+.card-top{
+    padding-top: 4px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.sidebar-li{
+    padding: 0;
+    margin: 0;
+}
+
+.sideForm input{
+    width: 100%;
+    margin: 0;
+    border-color: #343a40;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.li-btn{
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+.top-posts a{
+    color: white;
+}
+                    /*Blogpost Index*/
+.postHolder{
+    margin-bottom: 8px;
+    min-height: 75px;
+}
+
+.postHolder a{
+    text-decoration: none;
+}
+
+.highlight-odd:nth-child(4n+2){
+    background-color: #f2f2f2;
+}
+
+
+.postImg{
+    max-height: 75px;
+    overflow: hidden;
+}
+
+.postTitle{
+    height: 50%;
+    padding-top: 5px;
+    font-size: 1.25em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.postDetails{
+    height: 50%;
+}
+
+.text-collapse{
+    margin-bottom: 8px;
+}
+
+.button-collapse i{
+    color: green;
+    -webkit-transition: -webkit-transform .35s ease-in-out;
+    -ms-transition: -ms-transform .35s ease-in-out;
+    transition: transform .35s ease-in-out;
+}
+
+.button-collapse[aria-expanded="true"] i{
+    color: red;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    display: inline-block;
+}
+
+.index-image{
+    width: 100%;
+}
+
+.text-icon{
+    height: 100%;
+    width: 100%;
+    background-color: #6c757d;
+    text-align: center;
+    color: white;
+    font-size: 2.5em;
+    padding: 0.125em;
+}
+                    /*Sort Bar*/
+.sort-bar{
+    height: 65px;
+    margin-bottom: 8px;
+    background-color: #343a40;
+    color: white;
+}
+
+.sort-box{
+    height: 50%;
+    text-align: center;
+}
+
+.sort-box a{
+    text-decoration: none;
+    color: white;
+}
+.sort-box:hover{
+    background-color: #6c757d;
+    border-radius: 0.25rem;
+}
+
+.sort-active{
+    background-color: #6c757d;
+    border-radius: 0.25rem;
+}
+
+                    /*Blogpost Show page*/
+.show-post{
+    margin-top: 10px;
+}
+
+.show-post a{
+    color: white;
+}
+
+.show-post span{
+    color: rgba(255,255,255,.5);
+}
+
+.show-header{
+    padding-bottom: 0px;
+}
+
+.follow-btn{
+    text-align: left;
+    font-size: 1.1em;
+    margin-right: 8px;
+    word-spacing: 0.5rem;
+}
+
+.show-body{
+    padding: 5px 0px;
+}
+
+.show-text{
+    margin: 8px;
+}
+
+.rating-bar{
+    padding: 10px;
+}
+
+                    /*LIKE/UNLIKE form icons*/
+.rating-form{
+    font-size: 1.5em;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#unlike_form a{
+    margin-left: 10px;
+    color: #28a745;
+    text-decoration: none;
+}
+
+#unlike_form a:hover{
+    color: #6c757d;
+    
+}
+
+#like_form a{
+    margin-left: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+#like_form a:hover{
+    color: #28a745;
+}
+
+                    /*FAV/UNFAV form icons*/
+#unfav_form a{
+    color: red;
+    text-decoration: none;
+}
+
+#unfav_form a:hover{
+    color: #6c757d;
+}
+
+#fav_form a{
+    color: white;
+    text-decoration: none;
+}
+
+#fav_form a:hover{
+    color: red;
+}
+
+                    /*EDIT/DELETE POST form icons*/
+.edit-icon{
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.edit-icon:hover{
+    color: #ffc107;
+}
+
+#del_form a{
+    color: white;
+    text-decoration: none;
+}
+
+#del_form a:hover{
+    color: red;
+}
+
+                    /*Comment form*/
+.comment-output{
+    margin-top: 10px;
+    padding: 0.5rem;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+
+.dark-form{
+    background-color: #343a40;
+    color: white;
+    border-color: rgba(255,255,255,.5);
+}
+
+.dark-form:focus{
+    background-color: #343a40;
+    color: white;
+}
+
+                    /*Comment output*/
+.comment-title{
+    margin-top: 10px;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.comment-head{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: rgba(255,255,255,.5);
+    font-weight: bold;
+    font-size: 0.8rem;
+    word-spacing: 0.5rem;
+}
+
+.comment-head a{
+    text-decoration: none;
+    color: rgba(255,255,255,.5);
+}
+.comment-head a:hover{
+    color: white;
+}
+
+.comment-owner a{
+    color: cornflowerblue;
+}
+
+.comment-edit:hover{
+    color:#ffc107;
+}
+
+.comment-del:hover{
+    color: red;
+}
+
+.comment-head span{
+    word-spacing: normal;
+}
+
+.comment-body{
+    padding: 0.25rem 0.5rem;
+}
+
+                    /*New Blogpost Form*/
+#image{
+    display:none;
+}
+#image-preview{
+    width: 100%;
+    margin-top: 0;
+}
+
+.input-label{
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 0;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.new-form{
+    padding: 0.5rem;
+}
+
+.form-image{
+    padding-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.reset-btn{
+    color: rgba(255,255,255,.5);
+    cursor: pointer;
+}
+
+.reset-btn:hover{
+    text-decoration: underline;
+}
+
+.new-btns{
+    padding-top: 0.5rem;
+}
+
+                    /*Profile side card*/
+.profile-card{
+    margin-top: 50px;
+}
+
+.white-link{
+    color: white;
+}
+.white-link:hover{
+    color: white;
+}
+
+.profile-img{
+    width: 100%;
+    margin-top: -45px;
+}
+
+.bio{
+    font-size: 0.8em;
+}
+
+.profile-nav{
+    margin-bottom: 8px;
+}
+.profile-nav a{
+    color: #343a40;
+}
+.profile-nav .active{
+    font-weight: bold;
+}
+
+/* Set img as transparent pixel and set picture as background */
+.profile-img-wrapper img {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background: no-repeat center/cover;
+}
+
+
+.carousel-caption{
+    position: static;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+                    /*Notifications*/
+.note-holder{
+    background-color: #f2f2f2;
+    border: 1px solid rgba(0,0,0,.125);
+    margin-bottom: 12px;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.note-border{
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.p-15px{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.border-t-0{
+    border-top: none;
+}
+
+.border-b-0{
+    border-bottom: none;
+}
+
+.like-icon{
+    color: green;
+}
+
+.fav-icon{
+    color: red;
+}
+
+.user-icon{
+    color: dodgerblue;
+}
+
+.com-icon{
+    color: darkblue;
+}
+
+.new-icon{
+    color: #007bff;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+    color: #007bff;
+}
+
+                    /*Settings*/
+.inher{
+    height: inherit
+}
+
+.settings-bio{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding-right: inherit;
+}
+.settings-bio textarea{
+    resize: none;
+}
+.settings-bio .form-group{
+    margin-bottom: 0.5rem;
+}
+
+.setting-back{
+    background-color: #f2f2f2;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+/*BLOGPOST icons*/
+.post-icons{
+    color: #6c757d;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.post-icons a:hover{
+    color: #343a40;
+}
+
+.no-posts{
+    padding: 1.5rem;
+    font-size: 1.25em;
+}
+
+                    /*Carousel*/
+.car-card{
+    margin-top: 0.25rem;
+}
+
+.car-img img{
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    background: no-repeat center/cover;
+}
+
+.car-title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.car-no-img{
+    padding-top: 37.5%;
+    padding-bottom: 37.5%;
+}

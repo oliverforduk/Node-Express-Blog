@@ -1,0 +1,177 @@
+<% include ../partials/header %>
+
+<div class="comment-title">
+    <h2><%= user.username %>'s profile</h2>
+</div>
+
+<% include ../partials/profile-top %>
+
+<div class="row">
+    <div class="col-12 col-lg-9">
+        <!--Nav bar-->
+        <ul class="nav nav-tabs profile-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/user/profile/<%= user.id %>/activity">Activity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/profile/<%= user.id %>">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/profile/<%= user.id %>/favourites">Favourites</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/user/profile/<%= user.id %>/notifications">Notifications</a>
+            </li>
+          
+            <li class="nav-item ml-auto">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Newest</a>
+            </li>
+        </ul>
+        
+        <!--Notifications Output-->
+        <% notifications.forEach(function(note){ %>
+        <div class="col-12 note-holder">
+            <div class="row">
+                <div class="col-12">
+                    <!--Comment-->
+                    <% if(note.noteType == "comment"){ %>
+                        <i class="fas fa-comment com-icon"></i>
+                        <a href="/user/profile/<%= note.sender.id %>/activity">
+                            <%= note.sender.username %>
+                        </a>
+                        has commented on your post
+                    <% } %>
+                    <!--Like-->
+                    <% if(note.noteType == "like"){ %>
+                        <i class="fas fa-thumbs-up like-icon"></i>
+                        <a href="/user/profile/<%= note.sender.id %>/activity">
+                            <%= note.sender.username %>
+                        </a>
+                        has liked your post
+                    <% } %>
+                    <!--Favourite-->
+                    <% if(note.noteType == "favourite"){ %>
+                        <i class="fas fa-heart fav-icon"></i>
+                        <a href="/user/profile/<%= note.sender.id %>/activity">
+                            <%= note.sender.username %>
+                        </a>
+                        has favourited your post
+                    <% } %>
+                    <!--Follow-->
+                    <% if(note.noteType == "follow"){ %>
+                        <i class="fas fa-user user-icon"></i>
+                        <a href="/user/profile/<%= note.sender.id %>/activity">
+                            <%= note.sender.username %>
+                        </a>
+                        has started following you
+                    <% } %>
+                    
+                    <!--New notification-->
+                    <% if(!note.hasSeen){ %>
+                        <div class="float-r">
+                            <i class="fas fa-circle new-icon"></i>
+                        </div>
+                    <% } %>
+                        
+                    <!--Note Middle (linked post)-->
+                    <% if(note.noteType !== "follow"){ %>
+                        <div class="row p-05 p-b-0">
+                            <% if(note.post){ %>
+                                <div class="col-12">
+                                    <div class="row p-15px">
+                                        <div class="col-2 note-border postImg padding-l-0 padding-r-0">
+                                            <% if(note.post.image){ %>
+                                                <a href="/blogposts/<%= note.post._id %>">
+                                                    <img class="card-img cardImg" src="<%= note.post.image %>">
+                                                </a>
+                                            <% }else{ %>
+                                                <div class="text-icon">
+                                                    <i class="fas fa-align-left"></i>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                        <div class="col-10 note-border border-b-0 bg-white">
+                                            <div class="postTitle">
+                                                <a href="/blogposts/<%= note.post._id %>"><%= note.post.title %></a>
+                                            </div>
+                                            <div class="postDetails">
+                                                <span class="align-top">
+                                                    <a class="button-collapse" style="text-decoration: none;" data-toggle="collapse" href="#collapseText<%= note._id %>" role="button" aria-expanded="false" aria-controls="collapse<%= note.post._id %>">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </a>
+                                                    Submitted <i><%= moment(note.post.createdAt).fromNow() %></i> by <a href="/user/profile/<%= note.post.author.id %>/activity"><%= note.post.author.username %></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--Post expanded-->
+                                    <div class="col-12 col-md-10 offset-md-2 padding-l-0 padding-r-0">
+                                        <div class="collapse" id="collapseText<%= note._id %>">
+                                            <div class="card card-body text-collapse top-box border-t-0">
+                                                <% if(note.post.body){ %>
+                                                    <%= note.post.body %>
+                                                <% }else{ %>
+                                                    <img class="index-image" src="<%= note.post.image %>">
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }else{ %>
+                                <div class="col-12">
+                                    <div class="row p-15px">
+                                        <div class="col-12 note-border border-b-0 bg-white p-15">
+                                            <div class="wrapper">
+                                                <i>This post has been removed.</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } %>
+                    
+                    <!--Note Bottom-->
+                    <div>
+                        <% if(note.noteType == "comment"){ %>
+                            <a href="/user/profile/<%= note.sender.id %>/activity">
+                                <%= note.sender.username %>
+                            </a>
+                        <% } %>
+                        <i><%= moment(note.createdAt).fromNow() %></i>
+                    </div>
+                    
+                    <!--Comment text output-->
+                    <% if(note.noteType == "comment"){ %>
+                        <% if(note.comment){ %>
+                            <%= note.comment.text %>
+                        <% }else{ %>
+                            <div class="wrapper">
+                                <i>This comment has been removed.</i>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+        
+        <% if(notifications.length == 0){ %>
+            <div class="wrapper no-posts">
+                You have no notifications yet
+            </div>
+        <% } %>
+
+        <!--Pagination bar-->
+        <% include ../partials/pagination %>
+        
+    </div>
+    
+    <% include ../partials/profile-side %>
+    
+</div>
+
+<div class="buffer-150"></div>
+
+<% include ../partials/footer %>

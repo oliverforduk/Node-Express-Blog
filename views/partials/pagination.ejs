@@ -1,0 +1,69 @@
+<!--Pagination bar-->
+<div class="row">
+    <% if (pages && pages > 1) { %>
+        <ul class="pagination justify-content-center width-100">
+            <% if (current == 1) { %>
+                <li class="page-item disabled">
+                    <a class="page-link">First</a>
+                </li>
+            <% } else { %>
+                <li class="page-item">
+                    <a class="page-link" href="<%= path %><%if(search){%>?search=<%=search%><%}%>">First</a>
+                </li>
+            <% } %>
+     
+            <% if (current == 1) { %>
+                <li class="disabled">
+                    <a class="page-link">«</a>
+                </li>
+            <% } else { %>
+                <li class="page-item">
+                    <a class="page-link" href="<%= path %>?page=<%= Number(current) - 1 %><%if(search){%>&search=<%=search%><%}%>">«</a>
+                </li>
+            <% } %>
+     
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if (i !== 1) { %>
+                <li class="disabled">
+                    <a class="page-link">...</a>
+                </li>
+            <% } %>
+            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+            <% if (i == current) { %>
+                <li class="active">
+                    <a class="page-link"><%= i %></a>
+                </li>
+            <% } else { %>
+                <li class="page-item">
+                    <a class="page-link" href="<%= path %>?page=<%= i %><%if(search){%>&search=<%=search%><%}%>"><%= i %></a>
+                </li>
+            <% } %>
+            <% if (i == Number(current) + 4 && i < pages) { %>
+                <li class="disabled">
+                    <a class="page-link">...</a>
+                </li>
+            <% } %>
+            <% } %>
+     
+            <% if (current == pages) { %>
+                <li class="disabled">
+                    <a class="page-link">»</a>
+                </li>
+            <% } else { %>
+                <li class="page-item">
+                    <a class="page-link" href="<%= path %>?page=<%= Number(current) + 1 %><%if(search){%>&search=<%=search%><%}%>">»</a>
+                </li>
+            <% } %>
+     
+            <% if (current == pages) { %>
+                <li class="disabled">
+                    <a class="page-link">Last</a>
+                </li>
+            <% } else { %>
+                <li class="page-item">
+                    <a class="page-link" href="<%= path %>?page=<%= pages %><%if(search){%>&search=<%=search%><%}%>">Last</a>
+                </li>
+            <% } %>
+        </ul>
+    <% } %>
+</div>
